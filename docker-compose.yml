@@ -1,0 +1,28 @@
+version: '3.5'
+networks:
+  docker_nw:
+    driver: bridge
+    ipam:
+      driver: default
+      config:
+        - subnet: 192.168.200.0/24
+
+services:
+  splunk_enterprise:
+    build:
+        context: .
+        dockerfile: splunkenterprise/Dockerfile
+    tty: true
+    container_name: 'spe'
+    volumes:
+      - /C/Users/hoge/Desktop/docker/share/spe:/var/tmp
+    cap_add:
+      - SYS_ADMIN
+    ports:
+      - "18000:8000"
+      - "13389:3389"
+    networks:
+      docker_nw:
+        ipv4_address: 192.168.200.11
+    command: /sbin/init
+    labels:
