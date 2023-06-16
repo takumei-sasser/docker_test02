@@ -5,7 +5,7 @@ networks:
     ipam:
       driver: default
       config:
-        - subnet: 192.168.200.0/24
+        - subnet: 192.168.201.0/24
 
 services:
   splunk_enterprise:
@@ -13,9 +13,7 @@ services:
         context: .
         dockerfile: splunkenterprise/Dockerfile
     tty: true
-    container_name: 'spe'
-    volumes:
-      - /C/Users/hoge/Desktop/docker/share/spe:/var/tmp
+    container_name: 'spe2'
     cap_add:
       - SYS_ADMIN
     ports:
@@ -23,6 +21,5 @@ services:
       - "13389:3389"
     networks:
       docker_nw:
-        ipv4_address: 192.168.200.11
+        ipv4_address: 192.168.201.11
     command: /sbin/init
-    labels:
