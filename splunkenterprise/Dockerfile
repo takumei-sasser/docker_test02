@@ -13,10 +13,10 @@ RUN useradd ${SPLUNK_USER} -u ${SPLUNK_UID} -m
 USER ${SPLUNK_USER}
 
 #splunkインストール(ADDコマンドでtar展開)
-ADD src/splunk/splunk-8.2.2.1-ae6821b7c64b-Linux-x86_64.tgz /app/
+ADD splunk-8.2.2.1-ae6821b7c64b-Linux-x86_64.tgz /app/
 
-#エラー対策（何か忘れた）
-#ADD src/splunk/splunk-launch.conf /app/splunk/etc/
+#Splunkの起動エラー対策
+ADD splunk-launch.conf /app/splunk/etc/
 
 USER root
 
