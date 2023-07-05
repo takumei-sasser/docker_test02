@@ -1,0 +1,44 @@
+<!doctype html>
+<html>
+
+<head>
+    <title>This is the title of the webpage!</title>
+    <script src="https://code.jquery.com/jquery-3.7.0.js" integrity="sha256-JlqSTELeR4TLqP0OG9dxM7yDPqX1ox/HfgiSLBj8+kM=" crossorigin="anonymous"></script>
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+    <script>
+        $(function(){
+            const app = {
+                data() {
+                    return {
+                        message: 'Hello Vue!dddddddd',
+                        mes2: "hoge"
+                    }
+                },
+                methods: {
+                    func01: function(){
+                        //第2引数がPOSTするパラメータ
+                        $.post("./sample.json","hogehogehoge",null,"json").done(function (data1, textStatus, jqXHR) {
+                            console.log(data1);
+                        });
+                        
+                    }
+                }
+            }
+
+            Vue.createApp(app).mount('#main')
+            
+        });
+
+
+    </script>
+
+</head>
+
+<body>
+    <div id="main">
+        <button @click="func01()">{{message}}</button>
+        <p>{{mes2}}</p>
+    </div>
+</body>
+
+</html>
