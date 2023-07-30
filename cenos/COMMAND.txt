@@ -1,0 +1,3 @@
+docker build ./ -t hogerhel
+
+docker run --name hogehoge -it -v /D/docker/rhel9/volume:/tmp hogerhel /bin/bash
