@@ -1,0 +1,95 @@
+★★★★★★★★★★x86-64（Windows11 + docker）★★★★★★★★★★★★★★★★
+PS D:\docker\docker_test02\ContainerTest_Ubuntu> docker build ./ -t x86test_ubuntu --no-cache
+[+] Building 47.4s (13/13) FINISHED
+ => [internal] load build definition from Dockerfile                                                               0.0s
+ => => transferring dockerfile: 32B                                                                                0.0s
+ => [internal] load .dockerignore                                                                                  0.1s
+ => => transferring context: 2B                                                                                    0.0s
+ => [internal] load metadata for docker.io/library/ubuntu:latest                                                   0.8s
+ => CACHED [1/8] FROM docker.io/library/ubuntu:latest@sha256:0bced47fffa3361afa981854fcabcd4577cd43cebbb808cea2b1  0.0s
+ => [internal] load build context                                                                                  0.0s
+ => => transferring context: 84B                                                                                   0.0s
+ => [2/8] RUN apt-get update                                                                                       7.7s
+ => [3/8] RUN apt-get install -y build-essential                                                                  36.7s
+ => [4/8] COPY Makefile /tmp                                                                                       0.0s
+ => [5/8] COPY test.c /tmp                                                                                         0.0s
+ => [6/8] COPY endian.c /tmp                                                                                       0.0s
+ => [7/8] WORKDIR /tmp                                                                                             0.0s
+ => [8/8] RUN make                                                                                                 0.5s
+ => exporting to image                                                                                             1.4s
+ => => exporting layers                                                                                            1.4s
+ => => writing image sha256:16a59bc7a9ab95a3fd1386ce5e3f7634af47f92c9f64191c947e9198e94dd2ae                       0.0s
+ => => naming to docker.io/library/x86test_ubuntu                                                                  0.0s
+PS D:\docker\docker_test02\ContainerTest_Ubuntu> docker run -it x86test_ubuntu /bin/bash
+root@5270d05779af:/tmp# ls
+Makefile  endian.c  endian.o  test.c  test.o
+root@5270d05779af:/tmp# ./endian.o
+uint32: 0x12345678
+p_uint8[0]: 0x78
+p_uint8[1]: 0x56
+p_uint8[2]: 0x34
+p_uint8[3]: 0x12
+root@5270d05779af:/tmp# ./test.o
+lWork1 = [3913276746]
+cID[4] & 0xFF) * 0x100000000 = [4294967296]
+cID[3] & 0xFF) * 0x1000000 =   [3909091328]
+cID[2] & 0xFF) * 0x1000 =      [4128768]
+cID[1] & 0xFF) * 0x100 =       [56576]
+cID[0] & 0xFF)         =       [74]
+root@5270d05779af:/tmp# uname -m
+x86_64
+root@5270d05779af:/tmp# cat /etc/issue
+Ubuntu 22.04.2 LTS \n \l
+
+
+★★★★★★★★★★S390（IBM LinuxONE + Docker）★★★★★★★★★★★★★★★★
+[root@test03 tmp]# docker build ./ -t s390test_ubuntu
+[+] Building 0.4s (13/13) FINISHED
+ => [internal] load build definition from Dockerfile                                                               0.0s
+ => => transferring dockerfile: 371B                                                                               0.0s
+ => [internal] load .dockerignore                                                                                  0.0s
+ => => transferring context: 2B                                                                                    0.0s
+ => [internal] load metadata for docker.io/library/ubuntu:latest                                                   0.3s
+ => [internal] load build context                                                                                  0.0s
+ => => transferring context: 258B                                                                                  0.0s
+ => [1/8] FROM docker.io/library/ubuntu:latest@sha256:0bced47fffa3361afa981854fcabcd4577cd43cebbb808cea2b1f33a3dd  0.0s
+ => CACHED [2/8] RUN apt-get update                                                                                0.0s
+ => CACHED [3/8] RUN apt-get install -y build-essential                                                            0.0s
+ => CACHED [4/8] COPY Makefile /tmp                                                                                0.0s
+ => CACHED [5/8] COPY test.c /tmp                                                                                  0.0s
+ => CACHED [6/8] COPY endian.c /tmp                                                                                0.0s
+ => CACHED [7/8] WORKDIR /tmp                                                                                      0.0s
+ => CACHED [8/8] RUN make                                                                                          0.0s
+ => exporting to image                                                                                             0.0s
+ => => exporting layers                                                                                            0.0s
+ => => writing image sha256:3ba2cd158a5da369bf75eaf5eec308cedccfce1059b5dcbf47cd6adabb55817a                       0.0s
+ => => naming to docker.io/library/s390test_ubuntu                                                                 0.0s
+[root@test03 tmp]# docker run -it s390test_ubuntu /bin/bash
+root@dbc2d3fba3b7:/tmp# ll
+total 40
+drwxrwxrwt. 1 root root 4096 Jul 26 02:36 ./
+drwxr-xr-x. 1 root root 4096 Aug  4 02:35 ../
+-rwxrwxr-x. 1 root root  137 Jul 26 02:32 Makefile*
+-rwxrwxr-x. 1 root root  400 Jul 26 02:32 endian.c*
+-rwxr-xr-x. 1 root root 8168 Jul 26 02:36 endian.o*
+-rwxrwxr-x. 1 root root  862 Jul 26 02:32 test.c*
+-rwxr-xr-x. 1 root root 8168 Jul 26 02:36 test.o*
+root@dbc2d3fba3b7:/tmp# ./endian.o
+uint32: 0x12345678
+p_uint8[0]: 0x12
+p_uint8[1]: 0x34
+p_uint8[2]: 0x56
+p_uint8[3]: 0x78
+root@dbc2d3fba3b7:/tmp# ./test.o
+lWork1 = [3913276746]
+cID[4] & 0xFF) * 0x100000000 = [4294967296]
+cID[3] & 0xFF) * 0x1000000 =   [-385875968]
+cID[2] & 0xFF) * 0x1000 =      [4128768]
+cID[1] & 0xFF) * 0x100 =       [56576]
+cID[0] & 0xFF)         =       [74]
+root@dbc2d3fba3b7:/tmp# uname -m
+s390x
+root@dbc2d3fba3b7:/tmp# cat /etc/issue
+Ubuntu 22.04.2 LTS \n \l
+
+root@dbc2d3fba3b7:/tmp#

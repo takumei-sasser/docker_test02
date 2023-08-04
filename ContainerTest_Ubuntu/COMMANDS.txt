@@ -1,0 +1,6 @@
+docker build ./ -t x86test_ubuntu
+docker run -it x86test_ubuntu /bin/bash
+
+
+docker build ./ -t s390test_ubuntu
+docker run -it s390test_ubuntu /bin/bash
