@@ -93,3 +93,20 @@ root@dbc2d3fba3b7:/tmp# cat /etc/issue
 Ubuntu 22.04.2 LTS \n \l
 
 root@dbc2d3fba3b7:/tmp#
+
+★★★★★★★★★★コンテナのexport/import★★★★★★★★★★★★★★★★
+（x86で稼働しているコンテナをexport）
+PS D:\docker\docker_test02\ContainerTest_Ubuntu> docker export -o x86test_ubuntu.tar jolly_shamir
+（exportしたコンテナを同じ環境にimport）
+PS D:\docker\docker_test02\ContainerTest_Ubuntu> docker import x86test_ubuntu.tar importtest:v1.0
+sha256:763b38e944bb36df73e9e5436c8af4cc0c18cd99917930a415a327354422961e
+（runすると動く）
+PS D:\docker\docker_test02\ContainerTest_Ubuntu> docker run -it importtest:v1.0 /bin/bash
+root@f833464f5e70:/#
+
+（x86でexportしたコンテナを、s390でimportしても動かない）
+[root@test03 tmp]# docker import x86test_ubuntu.tar x86test_ubuntu:v1.0
+sha256:f50317c873962cac5cdac15bbf3e2a949056ec9e0c629b5e3521d1ba5324a99a
+[root@test03 tmp]# docker run -it x86test_ubuntu:v1.0 /bin/bash
+exec /bin/bash: exec format error
+[root@test03 tmp]#
